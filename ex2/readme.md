@@ -14,4 +14,4 @@ $$
 x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
 $$
 
-If the discriminant (\( b^2 - 4ac \)) is less than zero, the program returns `(0.0, 0.0)`, indicating no real roots.
+If the discriminant $$\( b^2 - 4ac \)$$ is less than zero, the program returns `(0.0, 0.0)`, indicating no real roots.
