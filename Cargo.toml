@@ -8,3 +8,7 @@ edition = "2021"
 [[bin]]
 name = "ex1"
 path = "src/exercises/ex1.rs"
+
+[[bin]]
+name = "ex2"
+path = "src/exercises/ex2.rs"

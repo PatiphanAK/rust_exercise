@@ -1,0 +1,1 @@
+### Ex1 is get input from io and then print ##
