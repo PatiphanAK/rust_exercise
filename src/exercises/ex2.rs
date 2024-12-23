@@ -1,40 +1,39 @@
 use std::io;
 
-fn quadeq(a: i32, b: i32, c: i32) -> (f64, f64) {
-    let d = (b as f64).powi(2) - 4.0 * a as f64 * c as f64;
-    if d < 0.0 {
-        return (0.0, 0.0);
+fn quadeq(a: i32, b: i32, c: i32) -> Option<(f64, f64)> {
+    let discriminant = (b as f64).powi(2) - 4.0 * a as f64 * c as f64;
+    if discriminant < 0.0 {
+        None
+    } else {
+        let x1 = (-b as f64 + discriminant.sqrt()) / (2.0 * a as f64);
+        let x2 = (-b as f64 - discriminant.sqrt()) / (2.0 * a as f64);
+        Some((x1, x2))
     }
-    let x1 = (-b as f64 + d.sqrt()) / (2.0 * a as f64);
-    let x2 = (-b as f64 - d.sqrt()) / (2.0 * a as f64);
-    (x1, x2)
+}
+
+fn read_input(prompt: &str) -> i32 {
+    let mut input = String::new();
+    println!("{}", prompt);
+    io::stdin().read_line(&mut input).expect("Failed to read input");
+    input.trim().parse().expect("Please enter a valid integer")
+}
+
+fn display_roots(a: i32, b: i32, c: i32, roots: Option<(f64, f64)>) {
+    println!("The expression is {}x^2 + {}x + {}", a, b, c);
+    match roots {
+        Some((root1, root2)) => {
+            println!("Root 1: {}", root1);
+            println!("Root 2: {}", root2);
+        }
+        None => println!("No real roots"),
+    }
 }
 
 fn main() {
-    let mut a = String::new();
-    let mut b = String::new();
-    let mut c = String::new();
-    
-    println!("This is exercise 2");
-    
-    println!("Enter a: ");
-    io::stdin().read_line(&mut a).expect("Failed to read input");
-    let a: i32 = a.trim().parse().expect("Please enter a valid integer for a");
-    
-    println!("Enter b: ");
-    io::stdin().read_line(&mut b).expect("Failed to read input");
-    let b: i32 = b.trim().parse().expect("Please enter a valid integer for b");
+    let a = read_input("Enter a:");
+    let b = read_input("Enter b:");
+    let c = read_input("Enter c:");
 
-    println!("Enter c: ");
-    io::stdin().read_line(&mut c).expect("Failed to read input");
-    let c: i32 = c.trim().parse().expect("Please enter a valid integer for c");
-
-    let (root1, root2) = quadeq(a, b, c);
-    println!("The expression is {}x^2 + {}x + {}", a, b, c);
-    if root1 == 0.0 && root2 == 0.0 {
-        println!("No real roots");
-    } else {
-        println!("Root 1: {}", root1);
-        println!("Root 2: {}", root2);
-    }
+    let roots = quadeq(a, b, c);
+    display_roots(a, b, c, roots);
 }
